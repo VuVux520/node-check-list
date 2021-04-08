@@ -1,0 +1,26 @@
+{
+    "name": "whatabyte-portal",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon ./index.js",
+        "ui": "browser-sync start --config bs-config.js",
+        "test": "mocha --recursive --exit"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "browser-sync": "^2.26.14",
+        "chai": "^4.3.4",
+        "mocha": "^8.3.2",
+        "nodemon": "^2.0.4",
+        "request": "^2.88.2"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "lodash": "^4.17.21",
+        "pug": "^3.0.2"
+    }
+}
