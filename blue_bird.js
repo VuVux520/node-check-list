@@ -22,7 +22,7 @@ Promise1.catch((error) =>{
 })
 
 //finally, catch
-promise
+/* promise
     .then(result => {
         // process the result
     })
@@ -31,4 +31,4 @@ promise
     })
     .finally(() => {
         // clean up the resources
-    });
+    }); */
