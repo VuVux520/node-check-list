@@ -21,7 +21,12 @@ var str = lodash.join(['home','dustin','github','test_lodash'], '/');
 var c = _.filter(users, function(o) { return !o.active; });
 var e = _.filter(users, { 'age': 36, 'active': true });
 var f = _.filter(users, ['active', false]);
-
+let numbers = [1, 2, 4, 7, 3, 5, 6];
+function isOddNumber(number) {
+  return number % 2;
+}
+const oddNum = lodash.filter(numbers, isOddNumber);
+console.log(oddNum);
 //_.map(collection, [iteratee=_.identity])
 var d = _.map([2,2],square)
 var g = _.map(users, 'user')

@@ -21,6 +21,11 @@ Promise1.catch((error) =>{
     console.error(error);
 })
 
+
+const wait = time => new Promise((resolve) => setTimeout(resolve, time));
+
+wait(450).then(() => console.log('ILoveYou!'));
+
 //finally, catch
 /* promise
     .then(result => {
