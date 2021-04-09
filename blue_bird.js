@@ -7,11 +7,11 @@ function getConnection(urlString){
 }
 
 //.then
-Promise.resolve(1)
-.then((x) => x + 1)
-.then((x) => x + 1)
-.then((x) => console.log(x))
-.catch(console.error)
+// Promise.resolve(1)
+// .then((x) => x + 1)
+// .then((x) => x + 1)
+// .then((x) => console.log(x))
+// .catch(console.error)
 
 //.spread([function(any values...) fulfilledHandler]) -> Promise
 const Promise1 = new Promise((resolve, reject) =>{
@@ -37,3 +37,19 @@ wait(450).then(() => console.log('ILoveYou!'));
     .finally(() => {
         // clean up the resources
     }); */
+//Promise.all()
+function work(delay) {
+    return new Promise((resolve) =>{
+        setTimeout(() => console.log('Resolving',delay));
+        resolve('done' + delay);
+    },delay);
+}
+
+var promise = Promise.all([work(300), work(500), work(1000), work(2000)]);
+
+promise.then((data) => {
+    console.log('All done');
+    data.forEach((text)=>{
+        console.log(text);
+    });
+});

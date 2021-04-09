@@ -1,14 +1,17 @@
 const fetch = require("node-fetch");
-async function myFunction() {
-    return "Hello";
-}
-async function myFunction() {
-    return Promise.resolve("Hello");
+async function hi(){
+  return "Hi!!!";
 }
 
-myFunction().then(
+const b = hi();
+
+b.then(x => console.log(x));
+async function myFunction2() {
+    return Promise.resolve(console.log("Hello"));
+}
+myFunction2().then(
     function(value) { /* code if successful */ },
-    function(error) { /* code if some error */ }
+    //function(error) { /* code if some error */ }
 );
 
 // //await is only valid in async function
@@ -26,9 +29,32 @@ async function sequence() {
 
 async function f() {
     try {
-      let response = await fetch('http://no-such-url');
+      let response = await fetch('http://google.com.vn');
+      console.log('fetch successful')
     } catch(err) {
-      console.log(err); // TypeError: failed to fetch
+      throw err;// TypeError: failed to fetch
     }
   }
 f();
+
+function wait1s() { 
+  return new Promise(resolve => {
+    setTimeout(()=>{
+      resolve('Resolving...');
+    }, 1000);
+  })
+}
+
+async function asyncCall(){
+  console.log('Calling');
+  const result = await wait1s();
+  console.log(result);
+}
+
+asyncCall();
+
+function getProcess(url){
+  return download(url).catch(e => {
+    return
+  })
+}
