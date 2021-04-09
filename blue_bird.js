@@ -1,3 +1,5 @@
+var Promise = require('bluebird');
+const { get } = require('request');
 //new Promise(function(function resolve, function reject) resolver) -> Promise
 function getConnection(urlString){
     return new Promise(function(resolve){
@@ -53,3 +55,33 @@ promise.then((data) => {
         console.log(text);
     });
 });
+
+function guessMyName(name){
+    return Promise.try(function(){
+        if(name !== "Vu"){
+            throw new Error(name + " aint my name")
+        }
+        else{ 
+            console.log('Thats right that is my name');
+    }})
+}
+guessMyName('Vu');
+function getName(){
+    return 'Thanh';
+}
+
+function getAge(){
+    return '21';
+}
+
+function getSex(){
+    return 'female';
+}
+//Promise.join();
+Promise.join(getName(),getAge(),getSex(), function(name, age, sex){
+    console.log("Joined: " + name + " " + age + " " + sex);
+});
+
+Promise.resolve([1,2,3]).get(-1).then((x)=>{
+    console.log(x);
+})
