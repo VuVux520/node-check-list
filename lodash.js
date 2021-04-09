@@ -70,4 +70,29 @@ var assign = lodash.assign({'a':'new value'},foo , new bar)
 var object2 = { 'a': 1, 'b': 2, 'c': 3 };
 var get = lodash.get(object2, 'b');
 
-console.log(get)
+//_.spread( func, start )
+var sub = lodash.spread((x,y)=>{
+  return x - y;
+})
+var write = lodash.spread(((author, year) => author + ' ' + year + ' !'))
+
+//_.method(path, args)
+var gfg = [
+  { 'a': { 'b': lodash.constant("Uy") } },
+  { 'a': { 'b': lodash.constant("Vu") } },
+  { 'a': { 'b': lodash.constant("1999") } }
+];
+
+var value = [
+  { 'a':{'b': lodash.constant("123")}},
+  { 'a':{'b': lodash.constant("456")}}
+]
+var i = lodash.map(gfg,lodash.method('a.b'))
+var j = lodash.map(value, lodash.method('a.b'))
+
+console.log(i)
+console.log(j)
+
+/* console.log(write(['Vu','1999']))
+console.log(sub([30,21]))
+console.log(get) */

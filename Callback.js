@@ -31,14 +31,15 @@ let url = 'http://google.com.vn';
 download(url,((picture) => console.log(`Processing ${picture}`)))
 
 
-/* function successCallback(){
-   //success code
-}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-function completeCallback(){
-   //complete code
+function useCallback(callback)
+{
+    callback(1);
+    callback(2);
+    callback(3);
 }
-
-function errorCallback(){
-   //error code
+function callback(sentence) {
+    console.log(sentence);
 }
+useCallback(callback);
