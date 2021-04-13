@@ -58,3 +58,18 @@ function getProcess(url){
     return
   })
 }
+
+function wait (s) {
+  return new Promise((resolve) => {
+    setTimeout(resolve,s);
+  })
+}
+
+async function whatsUp(){
+  for(var i = 0; i < 10; i++) {
+    await wait(2000);
+    console.log('Chao ban');
+  }
+}
+
+whatsUp();

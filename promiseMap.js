@@ -8,27 +8,27 @@ var photoLinks = [{link: 'https://pht.qoo-static.com/kbHoCAE38Mxvoad5NPxFwA0dXmP
 ];
 
 function getPhoto(photoLink){
-    return new Promise(function(fulfill, reject) {
+    return new Promise((fulfill, reject) => {
         request.get(photoLink.link)
             .on('error', function (err) {
                 err.photo = photoLink.link;
                 reject(err);
             })
             .pipe(fs.createWriteStream(photoLink.name)
-                .on('finish', function () {
+                .on('finish', () => {
                     fulfill(photoLink.name);
-                }).on('error', function (err) {
+                }).on('error', (err) => {
                     reject(err);
                 })
         );
     });
 }
 console.time("getPhoto");
-promise.map(photoLinks, function(item){
+promise.map(photoLinks, (item) => {
   return getPhoto(item);
-}, {concurrency: 6}).then(function(result){
+}, {concurrency: 6}).then((result)=> {
     console.log(result);
     console.timeEnd("getPhoto");
-}).catch(function(err){
+}).catch((err)=>{
     console.log(err);
 });
