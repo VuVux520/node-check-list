@@ -131,7 +131,16 @@ const P1 = Promise.reduce([1,2,3],(num,total) => {
 const P = [P1,P2];
 
 Promise.allSettled(P).then((results) => results.forEach((result) =>
-    console.log(result.isFulfilled())
+    console.log(result.isRejected())
 ))
+const promise1 = new Promise(reject => reject('Fail'))
+const promise2 = new Promise((resolve) => setTimeout(resolve, 100, 'quick'));
+const promise3 = new Promise((resolve) => setTimeout(resolve, 500, 'slow'));
 
+const promises = [promise2, promise3];
 
+Promise.any(promises).then((value) => console.log(value));
+Promise.any([promise1]).catch((err) => {
+    console.log(err);
+})
+Promise.race(promises).then((value) => console.log(value));
