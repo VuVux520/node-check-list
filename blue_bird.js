@@ -116,14 +116,22 @@ Promise.map([1,2,3], num => {
     console.log(numbers);
 })
 
-Promise.filter([1,2,3], num => {
+const P2 = Promise.filter([1,2,3], num => {
     return num % 2 === 0;
 }).then(numbers => {
     console.log(numbers);
 })
 
-Promise.reduce([1,2,3],(num,total) => {
+const P1 = Promise.reduce([1,2,3],(num,total) => {
     return total + num;
 },0).then(numbers => {
     console.log(numbers);
 })
+
+const P = [P1,P2];
+
+Promise.allSettled(P).then((results) => results.forEach((result) =>
+    console.log(result.isFulfilled())
+))
+
+
