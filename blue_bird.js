@@ -1,5 +1,6 @@
 var Promise = require('bluebird');
 const { get } = require('request');
+var ping = require('ping');
 var readFile = Promise.promisify(require('fs').readFile);
 //new Promise(function(function resolve, function reject) resolver) -> Promise
 function getConnection(urlString){
@@ -92,18 +93,37 @@ Promise.join(getName(),getAge(),getSex(), function(name, age, sex){
 Promise.resolve([1,2,3]).get(-1).then((x)=>{
     console.log(x);
 })
+//
+Promise.props({
+    name: getName(),
+    age: getAge(),
+    sex: getSex()
+}).then(result =>{
+    console.log(result.name, result.age, result.sex);
+})
+//
+Promise.some([
+    {name: 'Thanh'},
+    {name: 'Vu'}
+],1).spread((first) => {
+    console.log(first)
+})
 
-let step1 = () => {
-    new Promise((resolve, reject) => {
-        resolve(console.log('This is step 1'));
-    })
-}
+//
+Promise.map([1,2,3], num => {
+    return num*2;
+}).then(numbers => {
+    console.log(numbers);
+})
 
-let step2 = () => {
-    new Promise((resolve, reject) => {
-        var things = 'This is something';
-        return Promise.map(things, (things)=>{
+Promise.filter([1,2,3], num => {
+    return num % 2 === 0;
+}).then(numbers => {
+    console.log(numbers);
+})
 
-        })
-    })
-}
+Promise.reduce([1,2,3],(num,total) => {
+    return total + num;
+},0).then(numbers => {
+    console.log(numbers);
+})
