@@ -21,7 +21,12 @@ var str = lodash.join(['home','dustin','github','test_lodash'], '/');
 var c = _.filter(users, function(o) { return !o.active; });
 var e = _.filter(users, { 'age': 36, 'active': true });
 var f = _.filter(users, ['active', false]);
-
+let numbers = [1, 2, 4, 7, 3, 5, 6];
+function isOddNumber(number) {
+  return number % 2;
+}
+const oddNum = lodash.filter(numbers, isOddNumber);
+console.log(oddNum);
 //_.map(collection, [iteratee=_.identity])
 var d = _.map([2,2],square)
 var g = _.map(users, 'user')
@@ -65,4 +70,29 @@ var assign = lodash.assign({'a':'new value'},foo , new bar)
 var object2 = { 'a': 1, 'b': 2, 'c': 3 };
 var get = lodash.get(object2, 'b');
 
-console.log(get)
+//_.spread( func, start )
+var sub = lodash.spread((x,y)=>{
+  return x - y;
+})
+var write = lodash.spread(((author, year) => author + ' ' + year + ' !'))
+
+//_.method(path, args)
+var gfg = [
+  { 'a': { 'b': lodash.constant("Uy") } },
+  { 'a': { 'b': lodash.constant("Vu") } },
+  { 'a': { 'b': lodash.constant("1999") } }
+];
+
+var value = [
+  { 'a':{'b': lodash.constant("123")}},
+  { 'a':{'b': lodash.constant("456")}}
+]
+var i = lodash.map(gfg,lodash.method('a.b'))
+var j = lodash.map(value, lodash.method('a.b'))
+
+console.log(i)
+console.log(j)
+
+/* console.log(write(['Vu','1999']))
+console.log(sub([30,21]))
+console.log(get) */
