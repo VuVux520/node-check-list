@@ -11,11 +11,11 @@ function getConnection(urlString){
 }
 
 //.then
-// Promise.resolve(1)
-// .then((x) => x + 1)
-// .then((x) => x + 1)
-// .then((x) => console.log(x))
-// .catch(console.error)
+Promise.resolve(1)
+.then((x) => x + 1)
+.then((x) => x + 1)
+.then((x) => console.log(x))
+.catch(console.error)
 
 //.spread([function(any values...) fulfilledHandler]) -> Promise
 const Promise1 = new Promise((resolve, reject) =>{
@@ -144,3 +144,20 @@ Promise.any([promise1]).catch((err) => {
     console.log(err);
 })
 Promise.race(promises).then((value) => console.log(value));
+
+function test(time){
+    return (value) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log('Time is', time, 'ms');
+                resolve(time);
+            },time);
+        })
+    }
+}
+
+Promise.resolve([test(2000),test(1200),test(2500),test(1)]).mapSeries((asyncMethod) =>{
+    return asyncMethod();
+}).then((result) =>{
+    console.log(`result`,result);
+})
