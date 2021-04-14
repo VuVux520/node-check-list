@@ -1,4 +1,6 @@
+const fetch = require('node-fetch')
 const axios = require('axios')
+const fs = require('fs')
 
 const fetchGitHubInfo = async (url) => {
     console.log(`Fetching ${url}`);
@@ -23,3 +25,18 @@ const fetchUser = async (names) =>{
 fetchUser(['VuVux520'])
  .then(a => console.log(JSON.stringify(a)))
 
+ async function saveJSON(output) {
+    const response = await fetch('https://api.github.com/VuVux520');
+    const json = await response.json();
+    const text = JSON.stringify(json);
+    return await fs.writeFileSync(output, text);
+ }
+
+ async function saveJSON(){
+     const result = await fs.writeFileSync(output, text);
+     return result;
+ }
+
+ async function saveJSON(output) {
+     return fs.writeFileSync(output,text);
+ }
