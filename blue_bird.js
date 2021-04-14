@@ -1,5 +1,6 @@
 var Promise = require('bluebird');
 const { get } = require('request');
+var ping = require('ping');
 var readFile = Promise.promisify(require('fs').readFile);
 //new Promise(function(function resolve, function reject) resolver) -> Promise
 function getConnection(urlString){
@@ -10,11 +11,11 @@ function getConnection(urlString){
 }
 
 //.then
-// Promise.resolve(1)
-// .then((x) => x + 1)
-// .then((x) => x + 1)
-// .then((x) => console.log(x))
-// .catch(console.error)
+Promise.resolve(1)
+.then((x) => x + 1)
+.then((x) => x + 1)
+.then((x) => console.log(x))
+.catch(console.error)
 
 //.spread([function(any values...) fulfilledHandler]) -> Promise
 const Promise1 = new Promise((resolve, reject) =>{
@@ -92,18 +93,71 @@ Promise.join(getName(),getAge(),getSex(), function(name, age, sex){
 Promise.resolve([1,2,3]).get(-1).then((x)=>{
     console.log(x);
 })
+//
+Promise.props({
+    name: getName(),
+    age: getAge(),
+    sex: getSex()
+}).then(result =>{
+    console.log(result.name, result.age, result.sex);
+})
+//
+Promise.some([
+    {name: 'Thanh'},
+    {name: 'Vu'}
+],1).spread((first) => {
+    console.log(first)
+})
 
-let step1 = () => {
-    new Promise((resolve, reject) => {
-        resolve(console.log('This is step 1'));
-    })
-}
+//
+Promise.map([1,2,3], num => {
+    return num*2;
+}).then(numbers => {
+    console.log(numbers);
+})
 
-let step2 = () => {
-    new Promise((resolve, reject) => {
-        var things = 'This is something';
-        return Promise.map(things, (things)=>{
+const P2 = Promise.filter([1,2,3], num => {
+    return num % 2 === 0;
+}).then(numbers => {
+    console.log(numbers);
+})
 
+const P1 = Promise.reduce([1,2,3],(num,total) => {
+    return total + num;
+},0).then(numbers => {
+    console.log(numbers);
+})
+
+const P = [P1,P2];
+
+Promise.allSettled(P).then((results) => results.forEach((result) =>
+    console.log(result.isRejected())
+))
+const promise1 = new Promise(reject => reject('Fail'))
+const promise2 = new Promise((resolve) => setTimeout(resolve, 100, 'quick'));
+const promise3 = new Promise((resolve) => setTimeout(resolve, 500, 'slow'));
+
+const promises = [promise2, promise3];
+
+Promise.any(promises).then((value) => console.log(value));
+Promise.any([promise1]).catch((err) => {
+    console.log(err);
+})
+Promise.race(promises).then((value) => console.log(value));
+
+function test(time){
+    return (value) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                console.log('Time is', time, 'ms');
+                resolve(time);
+            },time);
         })
-    })
+    }
 }
+
+Promise.resolve([test(2000),test(1200),test(2500),test(1)]).mapSeries((asyncMethod) =>{
+    return asyncMethod();
+}).then((result) =>{
+    console.log(`result`,result);
+})
